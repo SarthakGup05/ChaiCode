@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
-import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
+import ChaiCodeFooter from './Footer'
 
 const Layout = () => {
   return (
@@ -10,7 +10,7 @@ const Layout = () => {
       <main className="flex-grow">
       <Outlet />
       </main>
-      <Footer />
+      <ChaiCodeFooter />
     </div>
   )
 }

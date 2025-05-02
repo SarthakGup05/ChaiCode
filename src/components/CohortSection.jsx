@@ -4,6 +4,7 @@ import { Code2, Terminal, Database, Radio, Server, GitBranch, Play } from 'lucid
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { CodeDecoration } from '@/components/ui/CodeDecoration';
 
 export default function CohortSection() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -16,7 +17,8 @@ export default function CohortSection() {
       startDate: "April 12, 2025",
       duration: "6 months",
       videoId: "dQw4w9WgXcQ",
-      price: "$999",
+      originalPrice: "₹99,999",
+      price: "₹79,999",
       instructor: "John Doe",
       tags: ["Python", "TensorFlow", "Pandas", "Jupyter"],
       codeSnippet: "import pandas as pd\nimport numpy as np\nfrom sklearn.model_selection import train_test_split",
@@ -30,7 +32,8 @@ export default function CohortSection() {
       startDate: "April 7, 2025",
       duration: "1-2 months",
       videoId: "KN3AWeSX7u0",
-      price: "$499",
+      originalPrice: "₹49,999",
+      price: "₹39,999",
       instructor: "Jane Smith",
       tags: ["Python", "LLMs", "Transformers"],
       codeSnippet: "from transformers import AutoModelForCausalLM, AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained(\"gpt2\")\nmodel = AutoModelForCausalLM.from_pretrained(\"gpt2\")\ninputs = tokenizer(\"AI is transforming\", return_tensors=\"pt\")",
@@ -44,7 +47,8 @@ export default function CohortSection() {
       startDate: "April 15, 2025",
       duration: "1-2 months",
       videoId: "Wf2eSG3owoA",
-      price: "$399",
+      originalPrice: "₹39,999",
+      price: "₹29,999",
       instructor: "Alice Johnson",
       tags: ["Docker", "Kubernetes", "CI/CD"],
       codeSnippet: "version: '3'\nservices:\n  web:\n    image: nginx:alpine\n    ports:\n      - \"80:80\"",
@@ -57,6 +61,7 @@ export default function CohortSection() {
     <div className="w-full min-h-screen bg-[#0B1121] text-white">
       {/* Header with gradient */}
       <div className="bg-gradient-to-r from-orange-500 to-amber-500 py-12 px-4 md:px-8 relative overflow-hidden">
+        <CodeDecoration variant="angular" className="opacity-30" />
         <div className="absolute inset-0 opacity-10">
           <Code2 className="absolute top-10 left-10 w-16 h-16 text-white" />
           <Terminal className="absolute bottom-10 right-20 w-24 h-24 text-white" />
@@ -153,7 +158,10 @@ export default function CohortSection() {
                       <div className="text-sm text-white/60">By {cohort.instructor}</div>
                     </div>
                     <div className="flex flex-col items-end">
-                      <div className="text-2xl font-bold text-[#00FFE1]">{cohort.price}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg line-through text-white/40">{cohort.originalPrice}</span>
+                        <span className="text-2xl font-bold text-[#00FFE1]">{cohort.price}</span>
+                      </div>
                       <div className="text-sm text-white/60">{cohort.duration}</div>
                     </div>
                   </div>

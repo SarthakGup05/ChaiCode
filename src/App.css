@@ -5,6 +5,23 @@
   text-align: center;
 }
 
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Utility classes for font families */
+.font-heading {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

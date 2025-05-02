@@ -58,10 +58,10 @@ const CircleConnector = ({ circles }) => {
       {circles.map((circle1, i) =>
         circles.slice(i + 1).map((circle2, j) => {
           const distance = Math.hypot(
-            (circle1.left - circle2.left) * 5,
-            (circle1.top - circle2.top) * 3
+            (circle1.left - circle2.left) * 4,
+            (circle1.top - circle2.top) * 2.5
           );
-          return distance < 400 ? (
+          return distance < 250 ? (
             <line
               key={`${i}-${j}`}
               x1={`${circle1.left}%`}
@@ -111,15 +111,15 @@ const StudentCircle = ({ size, color, top, left, delay, icon }) => {
 
   useEffect(() => {
     controls.start({
-      x: [0, Math.random() * 30 - 15],
-      y: [0, Math.random() * 30 - 15],
-      scale: [1, 1.05, 1],
+      x: [0, Math.random() * 20 - 10], // Reduced movement range
+      y: [0, Math.random() * 20 - 10], // Reduced movement range
+      scale: [1, 1.03, 1], // Subtler scale animation
       transition: {
-        duration: 4,
+        duration: 3, // Slightly faster animation
         repeat: Infinity,
         repeatType: "reverse",
         ease: "easeInOut",
-        delay: Math.random() * 2,
+        delay: Math.random() * 1.5,
       },
     });
   }, [controls]);
@@ -127,8 +127,8 @@ const StudentCircle = ({ size, color, top, left, delay, icon }) => {
   return (
     <motion.div
       animate={controls}
-      className={`absolute rounded-full overflow-hidden transition-all duration-300 border-2 ${
-        color === "orange" ? "border-orange-500" : "border-blue-500"
+      className={`absolute rounded-full overflow-hidden transition-all duration-300 border ${
+        color === "orange" ? "border-orange-500/60" : "border-blue-500/60"
       } backdrop-blur-sm`}
       style={{
         width: `clamp(${size * 0.6}px, ${size * 0.8}px, ${size}px)`,
@@ -136,15 +136,15 @@ const StudentCircle = ({ size, color, top, left, delay, icon }) => {
         top: `${top}%`,
         left: `${left}%`,
         zIndex: 1,
-        boxShadow: `0 0 30px ${
+        boxShadow: `0 0 20px ${  // Reduced shadow size
           color === "orange"
-            ? "rgba(249, 115, 22, 0.4)"
-            : "rgba(59, 130, 246, 0.4)"
+            ? "rgba(249, 115, 22, 0.3)"
+            : "rgba(59, 130, 246, 0.3)"
         }`,
         background: `radial-gradient(circle at center, ${
           color === "orange"
-            ? "rgba(249, 115, 22, 0.15)"
-            : "rgba(59, 130, 246, 0.15)"
+            ? "rgba(249, 115, 22, 0.12)"
+            : "rgba(59, 130, 246, 0.12)"
         } 0%, transparent 70%)`,
       }}
     >
@@ -164,11 +164,11 @@ const StudentCircle = ({ size, color, top, left, delay, icon }) => {
 
 export default function AlumniNetworkSection() {
   const circles = [
-    { size: 120, color: "orange", top: 20, left: 25, delay: 0, icon: <Code2 className="sm:w-12 sm:h-12 w-8 h-8" /> },
-    { size: 140, color: "blue", top: 30, left: 45, delay: 0.2, icon: <Database className="sm:w-14 sm:h-14 w-10 h-10" /> },
-    { size: 130, color: "orange", top: 50, left: 30, delay: 0.4, icon: <Cloud className="sm:w-13 sm:h-13 w-9 h-9" /> },
-    { size: 110, color: "blue", top: 65, left: 50, delay: 0.6, icon: <Cpu className="sm:w-11 sm:h-11 w-8 h-8" /> },
-    { size: 115, color: "blue", top: 75, left: 75, delay: 1.4, icon: <Server className="sm:w-12 sm:h-12 w-8 h-8" /> },
+    { size: 80, color: "orange", top: 15, left: 20, delay: 0, icon: <Code2 className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { size: 90, color: "blue", top: 35, left: 55, delay: 0.2, icon: <Database className="w-7 h-7 sm:w-12 sm:h-12 md:w-14 md:h-14" /> },
+    { size: 85, color: "orange", top: 60, left: 25, delay: 0.4, icon: <Cloud className="w-6 h-6 sm:w-11 sm:h-11 md:w-13 md:h-13" /> },
+    { size: 75, color: "blue", top: 70, left: 65, delay: 0.6, icon: <Cpu className="w-5 h-5 sm:w-9 sm:h-9 md:w-11 md:h-11" /> },
+    { size: 80, color: "blue", top: 85, left: 85, delay: 1.4, icon: <Server className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
   ];
 
   return (

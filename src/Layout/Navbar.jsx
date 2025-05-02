@@ -1,188 +1,178 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Menu, X, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [scrollDirection, setScrollDirection] = useState('none');
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [hoveredItem, setHoveredItem] = useState(null);
-    const [lastScrollY, setLastScrollY] = useState(0);
 
-    // Enhanced scroll handler for direction detection and smooth navbar transitions
     useEffect(() => {
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            
-            // Determine scroll direction
-            if (currentScrollY > lastScrollY + 5) {
-                setScrollDirection('down');
-            } else if (currentScrollY < lastScrollY - 5) {
-                setScrollDirection('up');
-            }
-            
-            // Set scrolled state for background change
-            if (currentScrollY > 20) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-            
-            setLastScrollY(currentScrollY);
+            setScrolled(window.scrollY > 20);
         };
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [lastScrollY]);
+    }, []);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+    const navigation = [
+        { name: 'Cohorts', href: '#' },
+        { name: 'Udemy', href: '#' },
+        { name: 'Docs', href: '#' },
+        { name: 'Reviews', href: '#' },
+    ];
 
-    // Dynamic navbar styles based on scroll state and direction
-    const getNavbarClasses = () => {
-        let classes = 'w-full fixed top-0 z-50 transition-all duration-300 ';
-        
-        // Background and shadow styles
-        if (scrolled) {
-            classes += 'bg-white/90 backdrop-blur-md shadow-lg ';
-        } else {
-            classes += 'bg-transparent ';
-        }
-        
-        // Scroll direction animation
-        if (scrollDirection === 'down' && scrolled && !isOpen) {
-            classes += '-translate-y-full '; // Hide navbar when scrolling down
-        } else if (scrollDirection === 'up' || !scrolled) {
-            classes += 'translate-y-0 '; // Show navbar when scrolling up
-        }
-        
-        return classes;
+    const handleLogin = () => {
+        console.log('Log in clicked');
     };
 
     return (
-        <nav className={getNavbarClasses()}>
-            <div className="max-w-7xl mx-auto px-4">
-                <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
-                    {/* Logo - Added scale animation on scroll */}
-                    <div className="flex items-center">
-                        <a href="#" className="flex items-center group">
-                            <div className={`text-2xl font-bold transition-all duration-300 group-hover:scale-105 ${scrolled ? 'scale-90' : 'scale-100'}`}>
-                                <img src="/assets/chaicode-black.png" alt="Logo" className="w-40 h-12" />
-                            </div>
-                        </a>
-                    </div>
-
-                    {/* Desktop Navigation Links */}
-                    <div className="hidden md:flex items-center justify-center flex-1 space-x-10 font-medium">
-                        <div 
-                            className="relative group" 
-                            onMouseEnter={() => setHoveredItem('cohorts')} 
-                            onMouseLeave={() => setHoveredItem(null)}
-                        >
-                            <Button className={`relative bg-transparent hover:bg-orange-50 text-black cursor-pointer transition-all duration-300 group-hover:text-orange-500 ${hoveredItem === 'cohorts' ? 'text-orange-500' : ''}`}>
-                                <span className={`font-medium transition-all duration-300 ${scrolled ? 'text-base' : 'text-lg'}`}>Cohorts</span>
-                            
-                                <span className="h-3 w-3 rounded-full bg-red-500 absolute top-2.4 -right-1 animate-pulse"></span>
-                            </Button>
-                        </div>
-                        
-                        <a href="#" className={`text-black hover:text-orange-500 transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-orange-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full ${
-                            scrolled ? 'text-base' : 'text-lg'
-                        }`}>
-                            Udemy
-                        </a>
-                        <a href="#" className={`text-black hover:text-orange-500 transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-orange-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full ${
-                            scrolled ? 'text-base' : 'text-lg'
-                        }`}>
-                            Docs
-                        </a>
-                        <a href="#" className={`text-black hover:text-orange-500 transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-orange-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full ${
-                            scrolled ? 'text-base' : 'text-lg'
-                        }`}>
-                            Reviews
-                        </a>
-                    </div>
-
-                    {/* Login Button with Enhanced Shine Effect */}
-                    <Link to="https://courses.chaicode.com/learn/account/signin">
-                        <Button
-                            variant="destructive"
-                            className={`relative bg-orange-500 hover:bg-orange-600 shadow-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-105 ${
-                                scrolled ? 'scale-95' : 'scale-100'
-                            }`}
-                        >
-                            <span className="relative z-10">Login</span>
-                            <span className="absolute top-0 -left-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
-                        </Button>
+        <nav className={`fixed w-full z-50 transition-all duration-300 ${
+            scrolled ? 'bg-black/95 backdrop-blur-md border-b border-orange-500/10 shadow-lg' : 'bg-transparent'
+        }`}>
+            <div className="container mx-auto px-4">
+                <div className="flex justify-between items-center h-16">
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center space-x-2">
+                        <motion.img 
+                            src="/assets/chaicode-white.svg" 
+                            alt="ChaiCode" 
+                            className="h-8 w-auto"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5 }}
+                        />
                     </Link>
 
-                    {/* Mobile menu button */}
-                    <div className="md:hidden flex items-center">
-                        <button
-                            onClick={toggleMenu}
-                            className={`${scrolled ? 'text-orange-500' : 'text-black'} hover:text-orange-700 focus:outline-none transition-colors duration-300`}
-                        >
-                            {isOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center space-x-8">
+                        {navigation.map((item, index) => (
+                            <motion.div
+                                key={item.name}
+                                onHoverStart={() => setHoveredItem(item.name)}
+                                onHoverEnd={() => setHoveredItem(null)}
+                                className="relative"
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <Link
+                                    to={item.href}
+                                    className="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium px-3 py-2"
+                                >
+                                    {item.name}
+                                </Link>
+                                {hoveredItem === item.name && (
+                                    <motion.div
+                                        layoutId="navbar-hover"
+                                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500 to-orange-600"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                    />
+                                )}
+                            </motion.div>
+                        ))}
                     </div>
+
+                    {/* Login Button */}
+                    <div className="hidden md:flex items-center space-x-4">
+                        <motion.button
+                            onClick={handleLogin}
+                            className="px-4 py-2 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors duration-200 flex items-center gap-1 group"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Log in
+                            <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                        </motion.button>
+                    </div>
+
+                    {/* Mobile menu button */}
+                    <motion.button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors duration-200"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                    >
+                        <span className="sr-only">Open main menu</span>
+                        <AnimatePresence mode="wait">
+                            {mobileMenuOpen ? (
+                                <motion.div
+                                    key="close"
+                                    initial={{ rotate: -90, opacity: 0 }}
+                                    animate={{ rotate: 0, opacity: 1 }}
+                                    exit={{ rotate: 90, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <X className="h-6 w-6" />
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="menu"
+                                    initial={{ rotate: 90, opacity: 0 }}
+                                    animate={{ rotate: 0, opacity: 1 }}
+                                    exit={{ rotate: -90, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <Menu className="h-6 w-6" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.button>
                 </div>
             </div>
 
-            {/* Mobile Navigation Menu */}
-            <div
-                className={`md:hidden ${isOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out`}
-            >
-                <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-sm shadow-lg">
-                    <div className="space-y-1">
-                        <div className="block px-3 py-2 text-base font-medium text-black hover:text-orange-500">
-                            <div className="flex justify-between items-center" onClick={() => setHoveredItem(hoveredItem === 'mobileCohorts' ? null : 'mobileCohorts')}>
-                                <span>Cohorts</span>
-                        
-                                <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse ml-1"></span>
-                            </div>
+            {/* Mobile menu */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="md:hidden bg-gray-900/95 backdrop-blur-md border-t border-orange-500/10"
+                    >
+                        <div className="px-2 pt-2 pb-3 space-y-1">
+                            {navigation.map((item, index) => (
+                                <motion.div
+                                    key={item.name}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                                >
+                                    <Link
+                                        to={item.href}
+                                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors duration-200"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3, delay: navigation.length * 0.1 }}
+                                className="pt-2"
+                            >
+                                <button
+                                    onClick={handleLogin}
+                                    className="w-full px-3 py-2 text-base font-medium text-orange-400 hover:text-orange-300 transition-colors duration-200 flex items-center gap-1 group"
+                                >
+                                    Log in
+                                    <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                                </button>
+                            </motion.div>
                         </div>
-                    </div>
-                    
-                    <a
-                        href="#"
-                        className="block px-3 py-2 text-base font-medium text-black hover:text-orange-500 hover:bg-orange-50 rounded-md transition-all duration-300"
-                    >
-                        Udemy
-                    </a>
-                    <a
-                        href="#"
-                        className="block px-3 py-2 text-base font-medium text-black hover:text-orange-500 hover:bg-orange-50 rounded-md transition-all duration-300"
-                    >
-                        Docs
-                    </a>
-                    <a
-                        href="#"
-                        className="block px-3 py-2 text-base font-medium text-black hover:text-orange-500 hover:bg-orange-50 rounded-md transition-all duration-300"
-                    >
-                        Reviews
-                    </a>
-                </div>
-            </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };
-
-// Make sure to add this to your tailwind.config.js for the shine animation
-// theme: {
-//     extend: {
-//         keyframes: {
-//             shine: {
-//                 '100%': { left: '125%' }
-//             }
-//         },
-//         animation: {
-//             shine: 'shine 1s'
-//         }
-//     }
-// }
 
 export default Navbar;
