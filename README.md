@@ -1,12 +1,34 @@
-# React + Vite
+# ✨ Animated Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fully responsive **Landing Page** built with a rich, animated UI using **React**, **Tailwind CSS**, and **Framer Motion**. Designed for startups, SaaS products, personal brands, or portfolio websites that need to make a powerful first impression.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- ⚡ Smooth entrance and scroll-triggered animations (Framer Motion)
+- 🎨 Clean, modern UI with Tailwind CSS
+- 📱 Fully responsive (mobile, tablet, desktop)
+- 🧭 Animated navbar with scroll indicators
+- 🖼️ Hero section with layered transitions
+- 💬 Testimonial from tweeter
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+---
+
+## 🛠️ Tech Stack
+
+- **React.js**
+- **Tailwind CSS**
+- **Framer Motion**
+- (Optional: EmailJS / Formspree for contact form integration)
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/yourusername/animated-landing-page.git
+cd animated-landing-page
+npm install
+npm run dev  # or npm start
